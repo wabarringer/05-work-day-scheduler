@@ -2,9 +2,11 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 var today = dayjs().format("MMM D, YYYY");
-console.log(today);
+// console.log(today);
 
 document.querySelector("#currentDay").textContent = today;
+
+
 
 var hour09 = $("#hour-09");
 var hour10 = $("#hour-10");
@@ -15,7 +17,6 @@ var hour14 = $("#hour-14");
 var hour15 = $("#hour-15");
 var hour16 = $("#hour-16");
 var hour17 = $("#hour-17");
-
 var hourArray = [hour09,hour10,hour11,hour12,hour13,hour14,hour15,hour16,hour17]
 
 $(function () {
@@ -26,13 +27,22 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   //
-  $("#hour-container").on("click", function(event){
-    
-    
-    
-  
+  for (let i = 0; i < hourArray.length; i++) {
+    var saveBtn = hourArray[i].children(".saveBtn");
+    saveBtn.click(function(){
+      // console.log("working");
+      // TODO: grab value from text area
+    var userInput = hourArray[i].children(".description").val();
+      // PROBLEM: Only pulls the text value from hour-9 block; for all other time blocks the text logs as an empty string
+      // TODO: pair with hour-x id of the time block & save to local storage
+      console.log(userInput);
+      localStorage.setItem("Input", userInput)
   })
-  // TODO: Add code to apply the past, present, or future class to each time
+    
+  }
+
+
+  // DONE: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
@@ -45,7 +55,6 @@ $(function () {
     // var currentHour = 14
     for (let i = 0; i < hourArray.length; i++) {
      if (hourArray[i][0].id.slice(-2) == currentHour){
-      console.log(true)
       hourArray[i].addClass("present")
      } else if (hourArray[i][0].id.slice(-2) < currentHour){
       hourArray[i].addClass("past")
